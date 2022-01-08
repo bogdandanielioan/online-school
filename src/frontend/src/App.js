@@ -9,7 +9,7 @@ import {
 import {GlobalStyle} from "./GlobalStyles"
 import Header from "./components/Header/Header";
 import  Home from "./components/Home/Home"
-
+import CourseDetails from "./components/CourseDetails/CourseDetails";
 export  default  ()=>{
 
 
@@ -19,6 +19,7 @@ export  default  ()=>{
             <Header/>
             <Switch>
                 <Route exact path="/"> <Home/></Route>
+                <Route path="/course-details/:courseId"><CourseDetails/></Route>
             </Switch>
             <GlobalStyle/>
         </Router>
