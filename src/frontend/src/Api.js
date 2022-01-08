@@ -71,60 +71,43 @@ export default class Data {
 
     }
 
-    async updateCourse(course, username, password) {
-
-        try {
-            const response = await this.api(`/courses/${course.id}`, "PUT", course, true, {username, password});
+    async updateCourse(course,id) {
+        const response = await this.api(`/courses/${id}`, 'PUT', course);
 
 
-            if (response.status == 204) {
-                return [];
-
-            } else {
-                return response.json().then(data => {
-                    return data.errors;
-                }).catch(err => {
-                    console.log(err);
-                });
-
-
-            }
-
-        } catch (err) {
-
-            throw new Error(err);
+        if (response.status === 200) {
+            console.log("ceva");
+            return [];
         }
-
-
+        else if (response.status ==404) {
+            return response.json().then(data => {
+                return data.message;
+            });
+        }
+        else {
+            throw new Error();
+        }
     }
 
-    async deleteCourse(courseId, username, password) {
+    async deleteCourse(courseId) {
+        const response = await this.api(`/books/${courseId}`, "DELETE");
 
-        try {
-            const response = await this.api(`/courses/${courseId}`, "DELETE", null, true, {username, password});
-            if (response.status == 204) {
-
-                return [];
-
-            } else {
-
-                return response.json().then(data => {
-
-
-                    return data.errors;
-
-                })
-            }
-
-
-        } catch (err) {
-
-
-            throw new Error(err);
+        if (response.status === 200) {
+            console.log("ceva");
+            return [];
         }
-
-
+        else if (response.status ==404) {
+            return response.json().then(data => {
+                return data.message;
+            });
+        }
+        else {
+            throw new Error();
+        }
     }
+
+
+
 
     async getUser(username, password) {
         const response = await this.api(`/users/signin`, 'GET', null, true, {username, password});

@@ -39,13 +39,11 @@ public class OnlineSchoolApplication {
 //
 //
 //
-//            for(int i=0;i<10;i++){
+//            for(int i=0;i<5;i++){
 //
 //
 //                Course  course = new Course(faker.educator().course(),
 //                     faker.educator().secondarySchool(),"1h",faker.lorem().characters());
-//
-//
 //                person.addCourse(course);
 //
 //

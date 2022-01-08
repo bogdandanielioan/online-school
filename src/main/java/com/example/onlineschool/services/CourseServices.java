@@ -37,4 +37,20 @@ public class CourseServices {
     }
 
 
+    public void updateCourse(Course newCourse,Long id){
+        this.courseRepository.findById(id)
+                .map(course -> {
+                    course.setTitle(newCourse.getTitle());
+                    course.setDescription(newCourse.getDescription());
+                    course.setEstimatedTime(newCourse.getEstimatedTime());
+                    course.setMaterialsNeeded(newCourse.getMaterialsNeeded());
+                    return courseRepository.save(course);
+                }).orElseThrow(()->new CourseNotFoundException("Course with Id  "+id+" doesnt exists"));
+
+    }
+
+
+
+
+
 }

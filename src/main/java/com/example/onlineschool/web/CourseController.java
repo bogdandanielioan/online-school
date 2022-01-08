@@ -31,12 +31,21 @@ public class CourseController {
     }
     @GetMapping("/{id}")
 
-    Course getBook (@PathVariable Long id) {
+    Course getCourse (@PathVariable Long id) {
 
 
         return  this.courseServices.getCourse(id);
 
     }
+
+    @PutMapping("{id}")
+    @ResponseStatus(
+            code = HttpStatus.OK
+    )
+    public void updateCourse(@RequestBody Course newCourse, @PathVariable Long id) {
+        courseServices.updateCourse(newCourse,id);
+    }
+
 
 
 }

@@ -3,12 +3,12 @@ import React  from "react";
 import { useState  ,useEffect ,useContext} from "react";
 
 
-
 import ReactMarkdown from 'react-markdown'
 
 import Data from "../../Api";
 
-import {useHistory, useParams} from "react-router-dom";
+import {Link, useHistory, useParams} from "react-router-dom";
+import remarkGfm from "remark-gfm";
 
 
 // import { Context } from "../../Context";
@@ -46,7 +46,7 @@ export default ({id})=>{
     return( <main>
         <div className="actions--bar">
             <div className="wrap">
-                {/*<Link className="button"  to={`/course-update/${courseId}`}>Update Course</Link>*/}
+                <Link className="button"  to={`/course-update/${courseId}`}>Update Course</Link>
                 {/*<Link className="button">Delete Course</Link>*/}
                 {/*<Link className="button button-secondary" to="/">Return to List</Link>*/}
             </div>
@@ -58,7 +58,7 @@ export default ({id})=>{
                     <div>
                         <h3 className="course--detail--title">Course</h3>
                         <h4 className="course--name">{course.title}</h4>
-                        <p>By</p>
+                        <p>By Bogdan Daniel</p>
 
                         <ReactMarkdown children={course.description}/>
                     </div>
@@ -70,9 +70,7 @@ export default ({id})=>{
 
                         <h3 className="course--detail--title">Materials Needed</h3>
                         <ul className="course--detail--list">
-
-                            <ReactMarkdown children={course.materialsNeeded} />
-
+                            <ReactMarkdown children={course.materialsNeeded} remarkPlugins={[remarkGfm]} />
                         </ul>
                     </div>
                 </div>
