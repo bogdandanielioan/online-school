@@ -5,7 +5,6 @@ import com.example.onlineschool.model.Course;
 import com.example.onlineschool.repository.CourseRepository;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.Id;
 import java.util.List;
 
 @Service
@@ -13,16 +12,13 @@ public class CourseServices {
 
 
     CourseRepository courseRepository;
-
     public CourseServices(CourseRepository courseRepository) {
         this.courseRepository = courseRepository;
     }
-
     public List<Course> getAllCourses(){
 
         return  this.courseRepository.findAll();
     }
-
     public Course getCourse(Long id){
 
         if(this.courseRepository.findById(id).get()!=null){
@@ -35,8 +31,6 @@ public class CourseServices {
 
 
     }
-
-
     public void updateCourse(Course newCourse,Long id){
         this.courseRepository.findById(id)
                 .map(course -> {

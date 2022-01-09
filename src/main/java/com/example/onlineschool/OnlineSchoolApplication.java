@@ -18,41 +18,31 @@ public class OnlineSchoolApplication {
     }
 
 
+    @Bean
+    CommandLineRunner commandLineRunner(PersonRepository personRepository){
+
+
+        return args -> {
+
+
+            Faker faker = new Faker();
+
+            String firstName = faker.name().firstName();
+            String lastName = faker.name().lastName();
+            String email = String.format("%s.%s@mycode.edu", firstName, lastName);
+
+            Person person= new Person(firstName,lastName,"bogdan@yahoo.com","parola");
 
 
 
 
-//    @Bean
-//    CommandLineRunner commandLineRunner(PersonRepository personRepository){
-//
-//
-//        return args -> {
-//
-//
-//            Faker faker = new Faker();
-//
-//            String firstName = faker.name().firstName();
-//            String lastName = faker.name().lastName();
-//            String email = String.format("%s.%s@mycode.edu", firstName, lastName);
-//
-//            Person person= new Person(firstName,lastName,email);
-//
-//
-//
-//            for(int i=0;i<5;i++){
-//
-//
-//                Course  course = new Course(faker.educator().course(),
-//                     faker.educator().secondarySchool(),"1h",faker.lorem().characters());
-//                person.addCourse(course);
-//
-//
-//
-//            }
 //            personRepository.save(person);
-//
-//
-//        };
-//    }
+
+
+        };
+    }
+
+
+
 
 }
