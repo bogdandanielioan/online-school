@@ -9,11 +9,10 @@ import { useContext  ,useEffect } from "react";
 import { Route, Redirect } from 'react-router-dom';
 
 export default  ({children})=>{
+
     let [user ,setUser]=useContext(Context);
-
-
     return(
-        <Route  path={"/course-details/:courseId"}>{
+        <Route  path={"/create-course"}>{
             user ? (
 
                     <>

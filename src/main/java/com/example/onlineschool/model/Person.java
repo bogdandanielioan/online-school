@@ -15,6 +15,7 @@ import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 
 import static com.example.onlineschool.security.ApplicationUserRole.STUDENT;
 
@@ -156,4 +157,15 @@ public class Person implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
+    public  boolean isCourse(Course c){
+        return  this.courses.contains(c);
+    }
+
+    public Course getById(Long id){
+
+        return  courses.stream().filter(e->e.getId()==id).findFirst().get();
+    }
+
+
 }

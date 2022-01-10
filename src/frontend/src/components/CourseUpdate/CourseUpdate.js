@@ -8,9 +8,6 @@ export default ()=>{
     let [course,setCourse]=useState({});
     const history=useHistory();
     let [err, setErrors] = useState([]);
-
-
-
     useEffect(async  ()=>{
         try {
             let api = new Api();

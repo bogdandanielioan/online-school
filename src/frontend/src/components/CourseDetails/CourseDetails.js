@@ -8,22 +8,17 @@ import ReactMarkdown from 'react-markdown'
 import Data from "../../Api";
 
 import {Link, useHistory, useParams} from "react-router-dom";
+import  Api from "../../Api"
 import remarkGfm from "remark-gfm";
+import {Context} from "../../Context";
 
+import {successNotification,errorNotification} from "../Notifications/Notifications";
 
-// import { Context } from "../../Context";
-
-export default ({id})=>{
-
-
+export default ()=>{
     let [course ,setCourse]=useState({});
-    // const [user, setUser] = useContext(Context);
+    const [user, setUser] = useContext(Context);
     let {courseId}=useParams();
-
-    // const history=useHistory();
-
-
-
+    const history=useHistory();
     useEffect( async ()=>{
 
         let data = new Data();
@@ -38,17 +33,40 @@ export default ({id})=>{
 
     },[])
 
+    let handleDelete= async (e)=>{
+        console.log(user);
+         let api = new Api();
+         try{
+
+            let response= await  api.deleteCourse(courseId,user.emailAddress,user.pass);
+
+            if(response.length==0){
+                successNotification(
+                    "Succes", `the course  ${course.title} was deleted`
+                );
+                history.push("/")
+            }else{
+                errorNotification("error",response);
+
+            }
+
+         }catch (e){
+             errorNotification("error","Can't erase course");
+             throw  new Error(e)
+         }
 
 
 
+
+    }
 
 
     return( <main>
         <div className="actions--bar">
             <div className="wrap">
                 <Link className="button"  to={`/course-update/${courseId}`}>Update Course</Link>
-                {/*<Link className="button">Delete Course</Link>*/}
-                {/*<Link className="button button-secondary" to="/">Return to List</Link>*/}
+                <a className="button"   onClick={handleDelete}>Delete Course</a>
+                <Link className="button button-secondary" to="/">Return to List</Link>
             </div>
         </div>
         <div className="wrap">
@@ -58,7 +76,7 @@ export default ({id})=>{
                     <div>
                         <h3 className="course--detail--title">Course</h3>
                         <h4 className="course--name">{course.title}</h4>
-                        <p>By Bogdan Daniel</p>
+                        <p>{"By "+user.firstName+"  " +user.lastName}</p>
 
                         <ReactMarkdown children={course.description}/>
                     </div>

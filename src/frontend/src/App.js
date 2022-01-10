@@ -1,5 +1,4 @@
 import React  from "react";
-
 import {
     BrowserRouter as Router,
     Switch,
@@ -14,20 +13,22 @@ import CourseUpdate from "./components/CourseUpdate/CourseUpdate";
 import  SignIn from  "./components/SignIn"
 import UserProvider from "./Context";
 import SignOut from "./components/SignOut/SignOut";
-import  PrivateRoute from "./components/PrivateRoute"
+import  PrivateRouteDetails from "./components/PrivateRoutes/PrivateRouteCourseDetails"
 import  SignUp from  "./components/SignUp"
+import  CreateCourse from "./components/CreateCourse"
+import  PrivateRouteCreateCourse from "./components/PrivateRoutes/PrivateRouteCreateCourse"
+
+
 export  default  ()=>{
-
-
     return (
         <Router>
             <UserProvider>
                 <Header/>
                 <Switch>
                     <Route exact path="/"> <Home/></Route>
-                    {/*<Route exact path ="/create-course/"><CreateCourse/></Route>*/}
-                    <PrivateRoute path="/course-details/:courseId"><CourseDetails/></PrivateRoute>
-                    {/*<Route path="/course-update/:courseId"><CourseUpdate/></Route>*/}
+                    <PrivateRouteCreateCourse exact path ="/create-course"><CreateCourse/></PrivateRouteCreateCourse>
+                    <PrivateRouteDetails path="/course-details/:courseId"><CourseDetails/></PrivateRouteDetails>
+                    <Route path="/course-update/:courseId"><CourseUpdate/></Route>
                     <Route path="/sign-in/"><SignIn /></Route>
                     <Route path="/sign-up" ><SignUp/></Route>
                     <Route path="/sign-out" ><SignOut/></Route>

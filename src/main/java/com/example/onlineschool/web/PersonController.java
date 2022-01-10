@@ -1,6 +1,7 @@
 package com.example.onlineschool.web;
 
-import com.example.onlineschool.exceptions.BadRequestException;
+import com.example.onlineschool.dto.CourseDTO;
+import com.example.onlineschool.model.Course;
 import com.example.onlineschool.model.Person;
 import com.example.onlineschool.services.PersonService;
 import org.springframework.http.HttpStatus;
@@ -40,12 +41,36 @@ public class PersonController {
         return   new ResponseEntity<>(personService.getUserByEmail(username), HttpStatus.OK);
     }
 
-        @PostMapping("/signup")
-        @ResponseStatus(
+    @PostMapping("/signup")
+    @ResponseStatus(
                 code = HttpStatus.OK
-        )
-    public void addBook(@Valid @RequestBody Person person) {
+    )
+    public void addPerson(@Valid @RequestBody Person person) {
         personService.addPerson(person);
+    }
+
+
+    @PostMapping("/create-course")
+    @PreAuthorize("hasAnyRole('ROLE_STUDENT')")
+    @ResponseStatus(value = HttpStatus.OK)
+    public void addCourse(@RequestBody CourseDTO course) {
+        this.personService.addCourse(course);
+    }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(
+            code = HttpStatus.OK
+    )
+    @PreAuthorize("hasAnyRole('ROLE_STUDENT')")
+    void deleteBook(@PathVariable Long id) {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String username="";
+        if (principal instanceof UserDetails) {
+            username = ((UserDetails)principal).getUsername();
+        } else {
+            username = principal.toString();
+        }
+        this.personService.deleteCourse(id,personService.getUserByEmail(username).getId());
     }
 
 

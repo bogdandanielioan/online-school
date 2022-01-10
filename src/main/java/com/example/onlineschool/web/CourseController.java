@@ -42,6 +42,8 @@ public class CourseController {
             code = HttpStatus.OK
     )
     public void updateCourse(@RequestBody Course newCourse, @PathVariable Long id) {
+
+
         courseServices.updateCourse(newCourse,id);
     }
 

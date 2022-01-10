@@ -9,10 +9,7 @@ export default () => {
     const [user,setUser]=useContext(Context)
     useEffect(()=>{
         setUser(null);
-
-
         Cookies.remove('authenticatedUser');
-
     },[])
 
     return (

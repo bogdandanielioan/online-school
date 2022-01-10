@@ -40,10 +40,12 @@ export default class Data {
     async createCourse(course, username, password) {
 
 
-        const response = await this.api("/courses", "POST", course, true, {username, password});
+        const response = await this.api("/users/create-course", "POST", course, true, {username, password});
 
-        if (response.status == 201) {
+
+        if (response.status == 200) {
             return [];
+
         } else if (response.status == 400) {
             return response.json().then(data => {
                 return data.errors;
@@ -75,6 +77,7 @@ export default class Data {
         const response = await this.api(`/courses/${id}`, 'PUT', course);
 
 
+
         if (response.status === 200) {
             console.log("ceva");
             return [];
@@ -89,9 +92,12 @@ export default class Data {
         }
     }
 
-    async deleteCourse(courseId) {
-        const response = await this.api(`/books/${courseId}`, "DELETE");
+    async deleteCourse(courseId,username, password) {
 
+
+        const response = await this.api(`/users/${courseId}`, "DELETE",true,{username,password});
+
+        console.log(response);
         if (response.status === 200) {
             console.log("ceva");
             return [];
@@ -116,7 +122,6 @@ export default class Data {
             throw new Error();
         }
     }
-
 
     async createUser(user) {
         const response = await this.api('/users/signup', 'POST', user);
