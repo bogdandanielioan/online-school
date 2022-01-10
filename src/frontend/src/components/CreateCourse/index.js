@@ -166,8 +166,6 @@ export default ()=>{
                             <label >Course Title</label>
                             <input id="courseTitle" name="courseTitle" type="text" className="title" />
 
-                            <p>By Joe Smith</p>
-
                             <label>Course Description</label>
                             <textarea id="courseDescription" name="courseDescription" className="description"></textarea>
                         </div>

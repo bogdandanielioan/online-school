@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -16,6 +17,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static com.example.onlineschool.security.ApplicationUserRole.STUDENT;
 
@@ -32,6 +34,7 @@ import static com.example.onlineschool.security.ApplicationUserRole.STUDENT;
         }
 )
 @AllArgsConstructor
+@ToString
 public class Person implements UserDetails {
 
     @Id
@@ -98,27 +101,29 @@ public class Person implements UserDetails {
 
     @JsonManagedReference
     @OneToMany(
-            cascade = CascadeType.ALL,
-            mappedBy ="user",
-            fetch = FetchType.EAGER
+            mappedBy = "user",
+            orphanRemoval = true,
+            cascade = {CascadeType.ALL},
+            fetch = FetchType.LAZY
     )
     private List<Course> courses= new ArrayList<>();
+
     public  void addCourse(Course course){
 
-         if(courses.contains(course)==false){
+        this.courses.add(course);
 
-             this.courses.add(course);
-
-             course.setUser(this);
-         }
+        course.setUser(this);
     }
 
-    public void removeCourse(Course course) {
+    public boolean removeCourse(Course course) {
         if (this.courses.contains(course)) {
             this.courses.remove(course);
             course.setUser(null);
+            return true;
         }
+        return false;
     }
+
 
     public Person(String firstName, String lastName, String emailAddress) {
         this.firstName = firstName;
@@ -166,6 +171,5 @@ public class Person implements UserDetails {
 
         return  courses.stream().filter(e->e.getId()==id).findFirst().get();
     }
-
 
 }

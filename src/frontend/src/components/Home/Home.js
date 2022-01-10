@@ -26,7 +26,7 @@ export default  ()=>{
 
 
 
-    },[])
+    },[courses])
     return (
         <main>
             <div className="wrap main--grid">

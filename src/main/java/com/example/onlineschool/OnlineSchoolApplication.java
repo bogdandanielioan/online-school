@@ -21,7 +21,6 @@ public class OnlineSchoolApplication {
     @Bean
     CommandLineRunner commandLineRunner(PersonRepository personRepository){
 
-
         return args -> {
 //            Faker faker = new Faker();
 //            String firstName = faker.name().firstName();

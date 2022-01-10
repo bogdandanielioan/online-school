@@ -3,6 +3,8 @@ package com.example.onlineschool.model;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
+import org.checkerframework.checker.interning.qual.EqualsMethod;
 
 
 import javax.persistence.*;
@@ -17,13 +19,9 @@ import javax.validation.constraints.Size;
         name="course"
 )
 @NoArgsConstructor
+@ToString
 public class Course {
-    public Course(String title, String description, String estimatedTime, String materialsNeeded) {
-        this.title = title;
-        this.description = description;
-        this.estimatedTime = estimatedTime;
-        this.materialsNeeded = materialsNeeded;
-    }
+
 
     @Id
     @SequenceGenerator(
@@ -86,6 +84,7 @@ public class Course {
     @ManyToOne
     @JsonBackReference
     @JoinColumn(
+
             name = "user_id",
             referencedColumnName = "id",
             foreignKey = @ForeignKey(
@@ -93,5 +92,13 @@ public class Course {
             )
     )
     private Person user;
+
+
+    public Course(String title, String description, String estimatedTime, String materialsNeeded) {
+        this.title = title;
+        this.description = description;
+        this.estimatedTime = estimatedTime;
+        this.materialsNeeded = materialsNeeded;
+    }
 }
 

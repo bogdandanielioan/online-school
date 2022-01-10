@@ -76,7 +76,8 @@ export default ()=>{
                     );
                     history.push("/");
                 }else{
-                    errorNotification("error",data);
+                    errorNotification(
+                        "You have entered an invalid username or password",data);
                 }
             }catch (e){
                 errorNotification("error","couldn't register");

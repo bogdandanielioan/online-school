@@ -52,7 +52,6 @@ export default ()=>{
 
          }catch (e){
              errorNotification("error","Can't erase course");
-             throw  new Error(e)
          }
 
 
