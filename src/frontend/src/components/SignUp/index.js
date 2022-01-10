@@ -150,7 +150,8 @@ export default ()=>{
                     <input id="emailAddress" name="emailAddress" type="email"   className="emailAddress"/>
                     <label >Password</label>
                     <input id="password" name="password" type="password" className="password"/>
-                    <button className="button" type="submit">Sign Up</button><button className="button button-secondary" >Cancel</button>
+                    <button className="button" type="submit">Sign Up</button>
+                    <button className="button button-secondary" ><Link to="/"href="sign-in.html">Cancel</Link></button>
                 </form>
                 <p>Already have a user account? Click here to <Link to="/sign-in"href="sign-in.html">sign in</Link>!</p>
             </div>

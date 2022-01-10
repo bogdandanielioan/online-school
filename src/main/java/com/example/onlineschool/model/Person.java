@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.apache.commons.lang3.builder.EqualsExclude;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -13,10 +14,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static com.example.onlineschool.security.ApplicationUserRole.STUDENT;
@@ -89,6 +87,7 @@ public class Person implements UserDetails {
             nullable = false,
             columnDefinition = "TEXT"
     )
+    @EqualsExclude
     private String password;
 
 
@@ -106,6 +105,7 @@ public class Person implements UserDetails {
             cascade = {CascadeType.ALL},
             fetch = FetchType.LAZY
     )
+    @EqualsExclude
     private List<Course> courses= new ArrayList<>();
 
     public  void addCourse(Course course){
@@ -172,4 +172,18 @@ public class Person implements UserDetails {
         return  courses.stream().filter(e->e.getId()==id).findFirst().get();
     }
 
+
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getFirstName(), getLastName(), getEmailAddress(), getPassword());
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Person)) return false;
+        Person person = (Person) o;
+        return getFirstName().equals(person.getFirstName()) && getLastName().equals(person.getLastName()) && getEmailAddress().equals(person.getEmailAddress());
+    }
 }
