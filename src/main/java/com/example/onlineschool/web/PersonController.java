@@ -42,6 +42,7 @@ public class PersonController {
         return new ResponseEntity<>(personService.getUserByEmail(username), HttpStatus.OK);
     }
 
+
     @PostMapping("/signup")
     @ResponseStatus(
             code = HttpStatus.OK
@@ -49,6 +50,8 @@ public class PersonController {
     public void addPerson(@Valid @RequestBody Person person) {
         personService.addPerson(person);
     }
+
+
     @PostMapping("/create-course")
     @PreAuthorize("hasAnyRole('ROLE_STUDENT')")
     @ResponseStatus(value = HttpStatus.OK)
@@ -59,6 +62,7 @@ public class PersonController {
 
         this.personService.addCourse(course);
     }
+
 
     @DeleteMapping("/delete-course/{id}")
     @ResponseStatus(
@@ -71,6 +75,9 @@ public class PersonController {
         String name = principal.getName();
 
         System.out.println(name);
+
+
+        System.out.println("=====================");
 
         this.personService.deleteCourse(id, name);
 

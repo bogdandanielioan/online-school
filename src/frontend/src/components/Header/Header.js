@@ -16,7 +16,6 @@ export default ()=>{
 
         if(user) {
             Cookies.set("authenticatedUser", JSON.stringify(user));
-            console.log("aici");
         }
     })
 

@@ -32,7 +32,6 @@ public class PersonService {
     public List<Person> getAllUsers() {
         return personRepository.findAll();
     }
-
     public void addPerson(Person person) {
         Boolean existsEmail = personRepository
                 .selectExistsEmail(person.getEmailAddress()).isPresent();
@@ -42,11 +41,9 @@ public class PersonService {
         }
         personRepository.save(new Person(person.getFirstName(), person.getLastName(), person.getEmailAddress(), person.getPassword()));
     }
-
     public Person getUserByEmail(String email) {
         return personRepository.selectExistsEmail(email).get();
     }
-
     public void addCourse(CourseDTO courseDTO) {
 
 
@@ -73,7 +70,6 @@ public class PersonService {
         System.out.println(courseDTO.toString());
 
     }
-
     public Course convertDtoToEntity(CourseDTO courseDTO){
 //        modelMapper.addMappings(new PropertyMap<CourseDTO, Course>() {
 //            @Override
@@ -91,7 +87,6 @@ public class PersonService {
                 .setMatchingStrategy(MatchingStrategies.LOOSE);
         return modelMapper.map(course, CourseDTO.class);
     }
-
     public void deleteCourse(Long idCourse, String username) {
         Person isPerson = personRepository
                 .selectExistsEmail(username).get();

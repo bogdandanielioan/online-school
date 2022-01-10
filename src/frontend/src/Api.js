@@ -18,13 +18,13 @@ export default class Data {
             options.body = JSON.stringify(body);
         }
 
+        console.log(credentials);
         if (requiresAuth) {
             const encodedCredentials = Buffer.from(`${credentials.username}:${credentials.password}`).toString('base64');
             options.headers['Authorization'] = `Basic ${encodedCredentials}`;
         }
         return fetch(url, options);
     }
-
     async getCourses() {
         const response = await this.api(`/courses`, 'GET');
         if (response.status === 200) {
@@ -96,21 +96,23 @@ export default class Data {
 
     async deleteCourse(courseId,username, password) {
 
+        console.log(username);
+        try {
+            const response = await this.api(`/users/delete-course/${courseId}`, "DELETE", null,true, {username, password});
 
-        const response = await this.api(`/users/${courseId}`, "DELETE",true,{username,password});
+            console.log("sadasdasdas");
+            if (response.status === 200) {
+                console.log("ceva");
+                return [];
+            } else if (response.status >= 400) {
+                return response.json().then(data => {
+                    return data.message;
+                });
+            }
+        }catch (e){
 
-        console.log(response);
-        if (response.status === 200) {
-            console.log("ceva");
-            return [];
-        }
-        else if (response.status ==404) {
-            return response.json().then(data => {
-                return data.message;
-            });
-        }
-        else {
-            throw new Error();
+            console.log(e);
+            throw new Error(e);
         }
     }
 

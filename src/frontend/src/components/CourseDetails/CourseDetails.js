@@ -34,10 +34,10 @@ export default ()=>{
     },[])
 
     let handleDelete= async (e)=>{
+        e.preventDefault();
         console.log(user);
          let api = new Api();
          try{
-
             let response= await  api.deleteCourse(courseId,user.emailAddress,user.pass);
 
             if(response.length==0){
@@ -53,9 +53,6 @@ export default ()=>{
          }catch (e){
              errorNotification("error","Can't erase course");
          }
-
-
-
 
     }
 
