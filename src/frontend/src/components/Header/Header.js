@@ -1,25 +1,24 @@
-import React, {useState} from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 
 import { useContext ,useEffect } from "react";
 
-// import { Context} from "../../Context";
+import { Context} from "../../Context";
 import Cookies from "js-cookie";
 
 export default ()=>{
 
 
-    // const [user,setUser]=useContext(Context);
-
-    const [user,setUser]=useState({});
+    const [user,setUser]=useContext(Context);
 
 
-    // useEffect(()=>{
-    //
-    //     if(user)
-    //         Cookies.set("authenticatedUser",JSON.stringify(user));
-    // })
+    useEffect(()=>{
 
+        if(user) {
+            Cookies.set("authenticatedUser", JSON.stringify(user));
+            console.log("aici");
+        }
+    })
 
     return(
         <header>

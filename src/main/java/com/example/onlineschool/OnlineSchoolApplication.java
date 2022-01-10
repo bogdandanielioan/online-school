@@ -25,16 +25,13 @@ public class OnlineSchoolApplication {
         return args -> {
 
 
-            Faker faker = new Faker();
-
-            String firstName = faker.name().firstName();
-            String lastName = faker.name().lastName();
-            String email = String.format("%s.%s@mycode.edu", firstName, lastName);
-
-            Person person= new Person(firstName,lastName,"bogdan@yahoo.com","parola");
-
-
-
+//            Faker faker = new Faker();
+//
+//            String firstName = faker.name().firstName();
+//            String lastName = faker.name().lastName();
+//            String email = String.format("%s.%s@mycode.edu", firstName, lastName);
+//
+//            Person person= new Person(firstName,lastName,"bogdan@yahoo.com","parola");
 
 //            personRepository.save(person);
 
