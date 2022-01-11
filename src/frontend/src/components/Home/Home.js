@@ -14,19 +14,27 @@ export default  ()=>{
 
 
     let  [courses ,setCourses]=useState([]);
-    useEffect(async ()=>{
+
+
+    let fetchCourses=async ()=>{
         let api= new Api();
         try{
-             let data=await   api.getCourses();
-             setCourses(data);
+            let data=await   api.getCourses();
+            setCourses(data);
         }catch (e){
             throw  new Error(e);
         }
 
+    }
+    useEffect(async ()=>{
 
 
 
+        await fetchCourses();
     },[])
+
+
+
     return (
         <main>
             <div className="wrap main--grid">
