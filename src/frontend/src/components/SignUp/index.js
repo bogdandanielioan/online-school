@@ -26,7 +26,6 @@ export default ()=>{
         setErrors([]);
 
         if(firstName==""){
-            console.log("aici=============");
             setErrors((prevState) => [
                     ...prevState,
                     "firstName is required"
@@ -100,7 +99,6 @@ export default ()=>{
         event.preventDefault();
         check();
 
-        console.log(err.length);
 
         if(err.length>0){
 

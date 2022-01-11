@@ -62,7 +62,6 @@ export default ()=>{
     let onsubmitHandler =  async (event) => {
         event.preventDefault();
         check();
-        console.log(err.length);
         if(err.length>0){
             err.forEach(e=>errorNotification("error",e));
         }else{

@@ -17,8 +17,6 @@ export default class Data {
         if (body !== null) {
             options.body = JSON.stringify(body);
         }
-
-        console.log(credentials);
         if (requiresAuth) {
             const encodedCredentials = Buffer.from(`${credentials.username}:${credentials.password}`).toString('base64');
             options.headers['Authorization'] = `Basic ${encodedCredentials}`;
@@ -81,7 +79,6 @@ export default class Data {
 
 
         if (response.status === 200) {
-            console.log("ceva");
             return [];
         }
         else if (response.status ==404) {
@@ -96,13 +93,13 @@ export default class Data {
 
     async deleteCourse(courseId,username, password) {
 
-        console.log(username);
+
         try {
             const response = await this.api(`/users/delete-course/${courseId}`, "DELETE", null,true, {username, password});
 
-            console.log("sadasdasdas");
+
             if (response.status === 200) {
-                console.log("ceva");
+
                 return [];
             } else if (response.status >= 400) {
                 return response.json().then(data => {
@@ -111,7 +108,7 @@ export default class Data {
             }
         }catch (e){
 
-            console.log(e);
+
             throw new Error(e);
         }
     }
