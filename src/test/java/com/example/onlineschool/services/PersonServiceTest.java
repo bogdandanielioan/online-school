@@ -1,6 +1,8 @@
 package com.example.onlineschool.services;
 
+import com.example.onlineschool.dto.CourseDTO;
 import com.example.onlineschool.exceptions.BadRequestException;
+import com.example.onlineschool.model.Course;
 import com.example.onlineschool.model.Person;
 import com.example.onlineschool.repository.CourseRepository;
 import com.example.onlineschool.repository.PersonRepository;
@@ -39,6 +41,7 @@ class PersonServiceTest {
     private ArgumentCaptor<Person>  personArgumentCaptor;
     @BeforeEach
     public void setup(){
+        modelMapper= new ModelMapper();
         underTest= new PersonService(personRepository, modelMapper, courseRepository);
 
          personArgumentCaptor=ArgumentCaptor.forClass(Person.class);
@@ -94,6 +97,17 @@ class PersonServiceTest {
 
 
     }
+
+
+
+
+
+
+
+
+
+
+
 
 
 
