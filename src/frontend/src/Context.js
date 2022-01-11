@@ -9,8 +9,7 @@ export const Context = createContext();
 
 
 
-
-const UserProvider = ({ children }) => {
+export const UserProvider = ({ children }) => {
 
     const [user, setUser] = useState(undefined);
 
@@ -26,17 +25,8 @@ const UserProvider = ({ children }) => {
     return (
         <Context.Provider value={[user, setUser]}>{children}</Context.Provider>
     );
-
-
-
-
 };
 
 
 
-
-
-
-
-export default UserProvider;
 

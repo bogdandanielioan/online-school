@@ -1,6 +1,5 @@
 
-import React from "react";
-
+import React, {useLayoutEffect} from "react";
 import Card from "./Card";
 
 import { useState ,useEffect } from "react";
@@ -11,27 +10,24 @@ import {Link} from "react-router-dom";
 
 
 export default  ()=>{
-
-
     let  [courses ,setCourses]=useState([]);
 
+    useEffect( () => {
+        let fetchCourses=async ()=>{
+            let api= new Api();
+            try{
+                let data=await   api.getCourses();
+                setCourses(data);
+            }catch (e){
+                throw  new Error(e);
+            }
 
-    let fetchCourses=async ()=>{
-        let api= new Api();
-        try{
-            let data=await   api.getCourses();
-            setCourses(data);
-        }catch (e){
-            throw  new Error(e);
         }
 
-    }
-    useEffect(async ()=>{
+         fetchCourses();
 
+    }, []);
 
-
-        await fetchCourses();
-    },[])
 
 
 
@@ -41,7 +37,6 @@ export default  ()=>{
                 {courses.map(e => (
                     <Card key={e.id} course={e}/>
                 ))}
-
                 <Link className="course--module course--add--module" to="/create-course">
                     <span className="course--add--title">
                         <svg version="1.1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
