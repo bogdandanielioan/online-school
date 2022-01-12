@@ -51,7 +51,6 @@ export default ()=>{
 
         event.preventDefault();
         check();
-
         if(err.length>0){
             err.forEach(e=>errorNotification("error",e));
 
@@ -65,7 +64,7 @@ export default ()=>{
                     materialsNeeded,
                     userId: user.id
                 }
-               let d= data.createCourse(course, user.emailAddress, user.password);
+               let d=  await data.createCourse(course, user.emailAddress, user.password);
                 if(d) {
                     successNotification("succes", "course create ");
                     history.push(`/`);
@@ -115,37 +114,6 @@ export default ()=>{
         }
 
     }
-
-
-
-    // let onsubmit = async  (event) => {
-    //     event.preventDefault();
-    //     let data = new Data();
-    //     let course = {
-    //         title,
-    //         description,
-    //         estimatedTime,
-    //         materialsNeeded,
-    //         userId: user.id
-    //     }
-    //
-    //     try {
-    //         let d = await data.createCourse(course, user.emailAddress, user.password);
-    //         console.log(d);
-    //         history.push("/");
-    //
-    //     }catch (e){
-    //         throw  new Error(e);
-    //     }
-    //
-    //
-    //
-    //
-    //
-    //
-    // }
-
-
 
 
 

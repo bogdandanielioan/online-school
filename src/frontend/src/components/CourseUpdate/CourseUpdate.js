@@ -9,6 +9,7 @@ export default ()=>{
     const history=useHistory();
     let [err, setErrors] = useState([]);
     useEffect(async  ()=>{
+
         try {
             let api = new Api();
             let data = await api.fetchCourse(courseId);

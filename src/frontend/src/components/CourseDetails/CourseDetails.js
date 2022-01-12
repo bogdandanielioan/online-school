@@ -35,7 +35,6 @@ export default ()=>{
 
     let handleDelete= async (e)=>{
         e.preventDefault();
-        console.log(user);
          let api = new Api();
          try{
             let response= await  api.deleteCourse(courseId,user.emailAddress,user.pass);

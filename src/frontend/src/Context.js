@@ -9,7 +9,7 @@ export const Context = createContext();
 
 
 
-export const UserProvider = ({ children }) => {
+ const UserProvider = ({ children }) => {
 
     const [user, setUser] = useState(undefined);
 
@@ -20,6 +20,8 @@ export const UserProvider = ({ children }) => {
 
             setUser( JSON.parse(Cookies.get('authenticatedUser')));
         }
+
+
     },[])
 
     return (
@@ -28,5 +30,5 @@ export const UserProvider = ({ children }) => {
 };
 
 
-
+export default UserProvider
 

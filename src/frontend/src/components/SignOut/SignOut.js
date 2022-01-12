@@ -10,7 +10,7 @@ export default () => {
     useEffect(()=>{
         setUser(null);
         Cookies.remove('authenticatedUser');
-    },[])
+    },[ ])
 
     return (
         <Redirect to="/" />

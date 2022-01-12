@@ -12,7 +12,7 @@ import {Link} from "react-router-dom";
 export default  ()=>{
     let  [courses ,setCourses]=useState([]);
 
-    useEffect( () => {
+    useEffect(  () => {
         let fetchCourses=async ()=>{
             let api= new Api();
             try{

@@ -11,7 +11,7 @@ import  Home from "./components/Home/Home"
 import CourseDetails from "./components/CourseDetails/CourseDetails";
 import CourseUpdate from "./components/CourseUpdate/CourseUpdate";
 import  SignIn from  "./components/SignIn"
-import {UserProvider} from "./Context";
+import UserProvider from "./Context";
 import SignOut from "./components/SignOut/SignOut";
 import  PrivateRouteDetails from "./components/PrivateRoutes/PrivateRouteCourseDetails"
 import  SignUp from  "./components/SignUp"
