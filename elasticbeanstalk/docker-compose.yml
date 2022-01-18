@@ -1,7 +1,7 @@
 version: "3.8"
 services:
   backend:
-    image: "bogdandanielioan/online-school:12.1.2022.0.5.36"
+    image: "bogdandanielioan/online-school:18.1.2022.23.7.39"
     ports:
       - "80:8080"
     restart: "always"
