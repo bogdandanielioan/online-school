@@ -19,17 +19,11 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final PasswordEncoder passwordEncoder;
-
     private final UserDetailsService userDetailsService;
-
-
-
     public ApplicationSecurityConfig(PasswordEncoder passwordEncoder, UserDetailsService userDetailsService) {
         this.passwordEncoder = passwordEncoder;
         this.userDetailsService = userDetailsService;
     }
-
-
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.cors().and()
@@ -47,12 +41,6 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
         auth
                 .userDetailsService(userDetailsService)
                 .passwordEncoder(passwordEncoder);
-    }
-
-
-    @Override
-    public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/api/users/signup" );
     }
 }
 

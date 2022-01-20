@@ -73,7 +73,7 @@ export default ()=>{
 
                 }
             }catch (e){
-                errorNotification("error","couldn't updated course");
+                errorNotification("error","couldn't create course");
                 throw  new Error(e);
             }
         }
@@ -110,6 +110,12 @@ export default ()=>{
             setErrors((prev)=>[
                 ...prev,
                 "description is required"
+            ])
+        }
+        if(description.length<12){
+            setErrors((prev)=>[
+                ...prev,
+                "description should have more than 12 characters"
             ])
         }
 
