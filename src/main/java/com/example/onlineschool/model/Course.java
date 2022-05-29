@@ -93,7 +93,6 @@ public class Course {
     )
     private Person user;
 
-
     public Course(String title, String description, String estimatedTime, String materialsNeeded) {
         this.title = title;
         this.description = description;

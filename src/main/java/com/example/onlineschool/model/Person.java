@@ -15,9 +15,8 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 import java.util.*;
-import java.util.stream.Collectors;
 
-import static com.example.onlineschool.security.ApplicationUserRole.STUDENT;
+import static com.example.onlineschool.security.UserRole.STUDENT;
 
 @Data
 @NoArgsConstructor
@@ -184,6 +183,6 @@ public class Person implements UserDetails {
         if (this == o) return true;
         if (!(o instanceof Person)) return false;
         Person person = (Person) o;
-        return getFirstName().equals(person.getFirstName()) && getLastName().equals(person.getLastName()) && getEmailAddress().equals(person.getEmailAddress());
+        return getFirstName().equals(person.getFirstName()) && getLastName().equals(person.getLastName()) && getEmailAddress().equals(person.getEmailAddress()  );
     }
 }

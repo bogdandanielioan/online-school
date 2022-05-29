@@ -5,6 +5,7 @@ import com.example.onlineschool.model.Course;
 import com.example.onlineschool.services.CourseServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -46,6 +47,15 @@ public class CourseController {
 
         courseServices.updateCourse(newCourse,id);
     }
+
+    @GetMapping("/ceva")
+    @PreAuthorize("hasAnyRole('ROLE_STUDENT')")
+    ResponseEntity<String> test(){
+
+        return new ResponseEntity<>("ceva",HttpStatus.OK);
+    }
+
+
 
 
 
