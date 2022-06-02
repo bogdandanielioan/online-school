@@ -27,7 +27,7 @@ public class CourseController {
     @ResponseStatus(
             value = HttpStatus.OK
     )
-//    @PreAuthorize("hasAnyRole('ROLE_STUDENT')")
+    @PreAuthorize("hasAnyRole('ROLE_STUDENT')")
     List<Course> getAllCourses(){
 
         return  courseServices.getAllCourses();

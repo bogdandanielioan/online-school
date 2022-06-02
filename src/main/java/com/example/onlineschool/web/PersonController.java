@@ -3,6 +3,7 @@ package com.example.onlineschool.web;
 import com.auth0.jwt.JWT;
 import com.example.onlineschool.dto.CourseDTO;
 import com.example.onlineschool.dto.UserDTO;
+import com.example.onlineschool.jwt.JwtUsernameAndPasswordAuthenticationFilter;
 import com.example.onlineschool.model.Person;
 import com.example.onlineschool.services.PersonService;
 import org.springframework.beans.factory.annotation.Value;
@@ -30,22 +31,12 @@ import static com.auth0.jwt.algorithms.Algorithm.HMAC512;
 @RequestMapping("/api/v1/users")
 public class PersonController {
     @Value("${application.jwt.secretKey}")
-    private String secret;
-    public static final String JWT_TOKEN_HEADER = "Jwt-Token";
-    public static final long EXPIRATION_TIME = 432_000_000; // 5 days expressed in milliseconds
     private PersonService personService;
 
     public PersonController(PersonService personService) {
         this.personService = personService;
     }
 
-    @PostMapping("/login")
-    public ResponseEntity<Person> login(@RequestBody UserDTO user) {
-        Person loginUser = personService.getUserByEmail(user.getUsername());
-
-        HttpHeaders jwtHeader = getJwtHeader(loginUser);
-        return new ResponseEntity<>(loginUser, jwtHeader, HttpStatus.OK);
-    }
 
 
 
@@ -79,32 +70,5 @@ public class PersonController {
         this.personService.deleteCourse(id, name);
     }
 
-    //    @PostMapping("/register")
-//    public ResponseEntity<User> register(@RequestBody User user) throws UserNotFoundException, UsernameExistException, EmailExistException {
-//        User newUser = userService.register(user.getFirstName(), user.getLastName(), user.getUsername(), user.getEmail());
-//        return new ResponseEntity<>(newUser, OK);
-//    }
-//
-    private HttpHeaders getJwtHeader(Person user) {
-        HttpHeaders headers = new HttpHeaders();
-        headers.add(JWT_TOKEN_HEADER, generateJwtToken(user));
-        return headers;
-    }
 
-
-    public String generateJwtToken(Person userPrincipal) {
-        String[] claims = getClaimsFromUser(userPrincipal);
-        return JWT.create()
-                .withIssuedAt(new Date()).withSubject(userPrincipal.getUsername())
-                .withArrayClaim("authorities", claims).withExpiresAt(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
-                .sign(HMAC512(secret.getBytes()));
-    }
-
-    private String[] getClaimsFromUser(Person user) {
-        List<String> authorities = new ArrayList<>();
-        for (GrantedAuthority grantedAuthority : user.getAuthorities()) {
-            authorities.add(grantedAuthority.getAuthority());
-        }
-        return authorities.toArray(new String[0]);
-    }
 }

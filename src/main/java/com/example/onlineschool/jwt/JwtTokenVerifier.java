@@ -58,10 +58,10 @@ public class JwtTokenVerifier extends OncePerRequestFilter {
 
             String username = body.getSubject();
 
-            var authorities = (List<String>) body.get("authorities");
+            var authorities = (List<Map<String, String>>) body.get("authorities");
 
             Set<SimpleGrantedAuthority> simpleGrantedAuthorities = authorities.stream()
-                    .map(m -> new SimpleGrantedAuthority(m))
+                    .map(m -> new SimpleGrantedAuthority(m.get("authority")))
                     .collect(Collectors.toSet());
 
             Authentication authentication = new UsernamePasswordAuthenticationToken(
@@ -78,4 +78,5 @@ public class JwtTokenVerifier extends OncePerRequestFilter {
 
         filterChain.doFilter(request, response);
     }
+
 }
