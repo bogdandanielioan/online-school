@@ -14,7 +14,7 @@ pipeline {
         RELEASE_REPO = "onlineschoool-release"
         CENTRAL_REPO = "onlineschoool-maven-central"
         NEXUSIP = "172.31.31.64"
-        NEXUSPORT = "9000"
+        NEXUSPORT = "8081"
         NEXUS_GRP_REPO= "onlineschool-group"
         NEXUS_LOGIN = "nexuslogin"
 
