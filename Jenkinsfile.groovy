@@ -18,7 +18,7 @@ pipeline {
         NEXUS_GRP_REPO= "onlineschool-group"
         NEXUS_LOGIN = "nexuslogin"
 
-
+asdsadsa
 
     }
 
@@ -37,12 +37,12 @@ pipeline {
         }
         stage('UNIT TEST'){
             steps {
-                sh 'mvn test'
+                sh 'mvn  -s settings.xml test'
             }
         }
         stage ('CODE ANALYSIS WITH CHECKSTYLE'){
             steps {
-                sh 'mvn checkstyle:checkstyle'
+                sh 'mvn  -s settings.xml checkstyle:checkstyle'
             }
             post {
                 success {
