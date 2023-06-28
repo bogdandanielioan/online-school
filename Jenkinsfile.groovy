@@ -17,7 +17,7 @@ pipeline {
         NEXUSPORT = "8081"
         NEXUS_GRP_REPO= "onlineschool-group"
         NEXUS_LOGIN = "nexuslogin"
-        SOANRSERVER = "soanrserver"
+        SOANRSERVER = "sonarserver"
         SONARSCANER = "sonarscanner" //
     }
 
