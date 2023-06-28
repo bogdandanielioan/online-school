@@ -71,7 +71,6 @@ pipeline {
                waitForQualityGate abortPipeline: true
             }
           }
+        }
     }
-
-
 }
