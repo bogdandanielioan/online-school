@@ -57,14 +57,14 @@ pipeline {
 
           steps {
             withSonarQubeEnv("${SONARSERVER}") {
-               sh '''${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=onlione-school \
+               sh '''${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=vprofile \
                    -Dsonar.projectName=online-school \
-                   -Dsonar.online-school=1.0 \
+                   -Dsonar.projectVersion=1.0 \
                    -Dsonar.sources=src/ \
                    -Dsonar.java.binaries=target/test-classes/com/example/onlineschool/services/ \
                    -Dsonar.junit.reportsPath=target/surefire-reports/ \
                    -Dsonar.jacoco.reportsPath=target/jacoco.exec \
-                   -Dsonar.java.checkstyle.reportPaths=target/checkstyle-result.xml
+                   -Dsonar.java.checkstyle.reportPaths=target/checkstyle-result.xml'''
             }
 
             timeout(time: 10, unit: 'MINUTES') {
