@@ -1,31 +1,36 @@
 pipeline {
-
     agent any
 
-	tools {
+    tools {
         maven "MAVEN3"
-        jdk  "oraclejdk11"
+        jdk "oraclejdk11"
     }
 
     environment {
-        SNAP_REPO = "onlineschoool-snapshot"
-        NEXUS_USER= "ADMIN"
-        NEXUS_PASS="onlineschool"
-        RELEASE_REPO = "onlineschoool-release"
-        CENTRAL_REPO = "onlineschoool-maven-central"
+        SNAP_REPO = "onlineschool-snapshot"
+        NEXUS_USER = "ADMIN"
+        NEXUS_PASS = "onlineschool"
+        RELEASE_REPO = "onlineschool-release"
+        CENTRAL_REPO = "onlineschool-maven-central"
         NEXUSIP = "172.31.31.64"
         NEXUSPORT = "8081"
-        NEXUS_GRP_REPO= "onlineschool-group"
+        NEXUS_GRP_REPO = "onlineschool-group"
         NEXUS_LOGIN = "nexuslogin"
         SONARSERVER = "sonarserver"
-        SONARSCANER = "sonarscanner" //
+        SONARSCANER = "sonarscanner"
+        ARTVERSION = "1.0" // Added ARTVERSION to be used in nexusArtifactUploader step
+        NEXUS_VERSION = "3" // Added NEXUS_VERSION
+        NEXUS_PROTOCOL = "http" // Added NEXUS_PROTOCOL
+        NEXUS_URL = "http://${NEXUSIP}:${NEXUSPORT}" // Added NEXUS_URL
+        NEXUS_REPOGRP_ID = "onlineschool-group" // Replace with your actual repo group ID
+        NEXUS_REPOSITORY = "onlineschool-group" // Replace with your actual repository ID
+        NEXUS_CREDENTIAL_ID = "nexuslogin" // Replace with your actual credential ID
     }
 
-    stages{
-
-        stage('BUILD'){
+    stages {
+        stage('BUILD') {
             steps {
-                sh 'mvn  -s settings.xml clean install -DskipTests'
+                sh 'mvn -s settings.xml clean install -DskipTests'
             }
             post {
                 success {
@@ -34,14 +39,14 @@ pipeline {
                 }
             }
         }
-        stage('UNIT TEST'){
+        stage('UNIT TEST') {
             steps {
-                sh 'mvn  -s settings.xml test'
+                sh 'mvn -s settings.xml test'
             }
         }
-        stage ('CODE ANALYSIS WITH CHECKSTYLE'){
+        stage('CODE ANALYSIS WITH CHECKSTYLE') {
             steps {
-                sh 'mvn  -s settings.xml checkstyle:checkstyle'
+                sh 'mvn -s settings.xml checkstyle:checkstyle'
             }
             post {
                 success {
@@ -50,64 +55,57 @@ pipeline {
             }
         }
         stage('CODE ANALYSIS with SONARQUBE') {
-          
-		  environment {
-             scannerHome = tool "${SONARSCANER}";
-          }
-
-          steps {
-            withSonarQubeEnv("${SONARSERVER}") {
-               sh '''${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=vprofile \
-                   -Dsonar.projectName=online-school \
-                   -Dsonar.projectVersion=1.0 \
-                   -Dsonar.sources=src/ \
-                   -Dsonar.java.binaries=target/test-classes/com/example/onlineschool/services/ \
-                   -Dsonar.junit.reportsPath=target/surefire-reports/ \
-                   -Dsonar.jacoco.reportsPath=target/jacoco.exec \
-                   -Dsonar.java.checkstyle.reportPaths=target/checkstyle-result.xml'''
+            environment {
+                scannerHome = tool "${SONARSCANER}"
             }
-
-            timeout(time: 10, unit: 'MINUTES') {
-               waitForQualityGate abortPipeline: true
+            steps {
+                withSonarQubeEnv("${SONARSERVER}") {
+                    sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=vprofile \
+                        -Dsonar.projectName=online-school \
+                        -Dsonar.projectVersion=${ARTVERSION} \
+                        -Dsonar.sources=src/ \
+                        -Dsonar.java.binaries=target/test-classes/com/example/onlineschool/services/ \
+                        -Dsonar.junit.reportsPath=target/surefire-reports/ \
+                        -Dsonar.jacoco.reportsPath=target/jacoco.exec \
+                        -Dsonar.java.checkstyle.reportPaths=target/checkstyle-result.xml"
+                }
+                timeout(time: 10, unit: 'MINUTES') {
+                    waitForQualityGate abortPipeline: true
+                }
             }
-          }
         }
         stage("Publish to Nexus Repository Manager") {
             steps {
                 script {
-                    pom = readMavenPom file: "pom.xml";
-                    filesByGlob = findFiles(glob: "target/*.${pom.packaging}");
-                    echo "${filesByGlob[0].name} ${filesByGlob[0].path} ${filesByGlob[0].directory} ${filesByGlob[0].length} ${filesByGlob[0].lastModified}"
-                    artifactPath = filesByGlob[0].path;
-                    artifactExists = fileExists artifactPath;
-                    if(artifactExists) {
-                        echo "*** File: ${artifactPath}, group: ${pom.groupId}, packaging: ${pom.packaging}, version ${pom.version} ARTVERSION";
+                    def pom = readMavenPom file: "pom.xml"
+                    def filesByGlob = findFiles(glob: "target/*.${pom.packaging}")
+                    if (!filesByGlob.isEmpty()) {
+                        def artifactPath = filesByGlob[0].path
+                        echo "*** File: ${artifactPath}, group: ${pom.groupId}, packaging: ${pom.packaging}, version ${ARTVERSION}"
                         nexusArtifactUploader(
-                                nexusVersion: NEXUS_VERSION,
-                                protocol: NEXUS_PROTOCOL,
-                                nexusUrl: NEXUS_URL,
-                                groupId: NEXUS_REPOGRP_ID,
-                                version: ARTVERSION,
-                                repository: NEXUS_REPOSITORY,
-                                credentialsId: NEXUS_CREDENTIAL_ID,
-                                artifacts: [
-                                        [artifactId: pom.artifactId,
-                                         classifier: '',
-                                         file: artifactPath,
-                                         type: pom.packaging],
-                                        [artifactId: pom.artifactId,
-                                         classifier: '',
-                                         file: "pom.xml",
-                                         type: "pom"]
-                                ]
-                        );
-                    }
-                    else {
-                        error "*** File: ${artifactPath}, could not be found";
+                            nexusVersion: NEXUS_VERSION,
+                            protocol: NEXUS_PROTOCOL,
+                            nexusUrl: NEXUS_URL,
+                            groupId: NEXUS_REPOGRP_ID,
+                            version: ARTVERSION,
+                            repository: NEXUS_REPOSITORY,
+                            credentialsId: NEXUS_CREDENTIAL_ID,
+                            artifacts: [
+                                [artifactId: pom.artifactId,
+                                    classifier: '',
+                                    file: artifactPath,
+                                    type: pom.packaging],
+                                [artifactId: pom.artifactId,
+                                    classifier: '',
+                                    file: "pom.xml",
+                                    type: "pom"]
+                            ]
+                        )
+                    } else {
+                        error "*** File not found in target directory"
                     }
                 }
             }
         }
     }
 }
-    
