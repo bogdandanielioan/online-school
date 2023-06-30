@@ -95,7 +95,7 @@ pipeline {
                             artifacts: [
                                 [artifactId: pom.artifactId,
                                 classifier: '',
-                                file: artifactPath,
+                                file: 'target/online-school-0.0.1-SNAPSHOT.jar',
                                 type: pom.packaging],
                                 [artifactId: pom.artifactId,
                                 classifier: '',
