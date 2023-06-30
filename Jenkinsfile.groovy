@@ -21,7 +21,7 @@ pipeline {
         ARTVERSION = "1.0" // Added ARTVERSION to be used in nexusArtifactUploader step
         NEXUS_VERSION = "3" // Added NEXUS_VERSION
         NEXUS_PROTOCOL = "http" // Added NEXUS_PROTOCOL
-        NEXUS_URL = "http://${NEXUSIP}:${NEXUSPORT}" // Added NEXUS_URL
+        NEXUS_URL = "${NEXUSIP}:${NEXUSPORT}" // Added NEXUS_URL
         NEXUS_REPOGRP_ID = "onlineschool-group" // Replace with your actual repo group ID
         NEXUS_REPOSITORY = "onlineschool-group" // Replace with your actual repository ID
         NEXUS_CREDENTIAL_ID = "nexuslogin" // Replace with your actual credential ID
