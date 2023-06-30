@@ -81,19 +81,16 @@ pipeline {
                         nexusVersion: NEXUS_VERSION,
                         protocol: NEXUS_PROTOCOL,
                         nexusUrl: NEXUS_URL,
-                        groupId: NEXUS_REPOGRP_ID,
-                        version: ARTVERSION,
+                        groupId: 'QA',
+                        version: "${env.BUILD_ID}-${env.BUILD_TIMESTAMP}}",
                         repository: NEXUS_REPOSITORY,
                         credentialsId: NEXUS_CREDENTIAL_ID,
                         artifacts: [
-                            [artifactId: pom.artifactId,
+                            [
+                            artifactId: 'online-school',
                             classifier: '',
-                            file: artifactPath,
-                            type: pom.packaging],
-                            [artifactId: pom.artifactId,
-                            classifier: '',
-                            file: "pom.xml",
-                            type: "pom"]
+                            file: "target/online-school-0.0.1-SNAPSHOT.jar",
+                            type: "jar"]
                         ]
                     );
         }
